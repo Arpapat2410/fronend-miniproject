@@ -1,7 +1,23 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState } from 'react'
+import { Link, useNavigate } from "react-router-dom"
+import authService from '../service/auth.service.js'
+import { useAuthContext } from '../context/AuthContext'
+import Swal from 'sweetalert2'
 
 const SignupPage = () => {
+  const [user, setUser] = useState({
+    //ต้องใช้ให้เหมือนกันหลังบ้าน
+    username: "",
+    password: "",
+  });
+
+  const navigate = useNavigate();
+  const { login } = useAuthContext();
+  const [error, setError] = useState();
+
+  const handleChange = (e) => {
+    setUser((prev) => ({ ...prev, [e.target.name]: e.target.value }))
+  }
 
   const handleClear = (e) => {
     setUser({
@@ -11,30 +27,55 @@ const SignupPage = () => {
     setError(false);
   }
 
-  return (
-    
-    <div className="container bg-white rounded-lg shadow-lg w-full md:w-96 mx-auto p-4 md:p-7 my-20">
-      <div className="form-container items-center justify-center p-4">
-        <form className="w-full max-w-md">
-          <h1 className="text-2xl font-bold text-center mb-4">Login Account</h1>
-          
-          <span className="text-sm text-center mt-4">Log in to log in</span>
-          <input
-            type="email"
-            placeholder="Email"
-            className="input input-success my-3 w-full"
-          />
-          <input
-            type="password"
-            placeholder="Password"
-            className="input input-success my-3 w-full"
-          />
-          <button className="btn btn-success mt-4 w-full">
-            Sign Up
-          </button>
+  const handleClick = async (e) => {
+    e.preventDefault();
+    try {
+      const currentUser = await authService.login(user.username, user.password);
+      login(currentUser)
+      Swal.fire({
+        title: "Login successful!",
+        icon: "success"
+      });
+      navigate("/")
+    } catch (error) {
+      Swal.fire({
+        title: "Unsuccessful login!",
+        icon: "error"
+      });
+      console.log(error);
+      setError(true);
+    }
+  }
 
-          <Link to="" className="btn btn-danger w-full mt-2" onClick={handleClear}>Cencal</Link>
-        </form>
+  return (
+    <div className='container mx-auto mt-16 w-[60%]'>
+    <div className="card lg:card-side bg-base-100 shadow-xl">
+        <figure className='w-80'><img src="https://s.isanook.com/sp/0/ui/292/1463171/liverpoolfc_345199050_1197991024242814_6763124454030903115_n.jpg" alt="Album" /></figure>
+        
+        <div className="card-body">
+            <span className="text-3xl text-center mb-5">Login to FOOTBALLSHOP</span>
+            <span className="text-sm text-center mb-3">Enter your username to log in as a member</span>
+            <input
+              type="text"
+              placeholder="username"
+              name="username"
+              value={user.username}
+              onChange={handleChange}  // เพิ่ม onChange เพื่ออัพเดตค่า user.username
+              className="input input-warning  my-4 w-full"
+            />
+            <input
+              type="password"
+              name="password"
+              placeholder='password'
+              value={user.password}
+              onChange={handleChange}  // เพิ่ม onChange เพื่ออัพเดตค่า user.password
+              className="input input-warning  my-4 w-full"
+            />
+            <div className="card-actions justify-end">
+              <button className="btn" onClick={handleClear}>Cancel</button>
+              <button className="btn btn-warning" onClick={handleClick}>Sign In</button>
+            </div>
+          </div>
       </div>
     </div>
   );

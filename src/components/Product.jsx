@@ -3,8 +3,10 @@ import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 import Swal from "sweetalert2";
 import { VITE_BACKEND_URL } from "../App"
+import { useAuthContext } from '../context/AuthContext.jsx';
 
 const Product = ({ product, getProducts }) => {
+    const { user } = useAuthContext()
 
     const deleteProduct = async (id) => {
         const result = await Swal.fire({
@@ -24,9 +26,6 @@ const Product = ({ product, getProducts }) => {
                     'Your file has been deleted.',
                     'success'
                 )
-                toast.success("Delete a product successfully", {
-                    theme: "colored"
-                })
                 getProducts()
             } catch (error) {
                 toast.error(error.message, {
@@ -42,15 +41,16 @@ const Product = ({ product, getProducts }) => {
         <div className="card btn-ghost w-78 bg-base-100 shadow-xl">
             <figure><img src={product.image} alt="{product.name}" /></figure>
             <div className="card-body">
-                <p>{product.type}</p>
+                <p className="text-accent-focus">{product.type}</p>
                 <h3 className="card-title">{product.name}</h3>
-                <h2>{product.price}</h2>
+                <h3 className="card-title text-accent mb-3 text-2xl" >${product.price}</h3>
 
-
-                <div className="card-actions justify-end">
-                    <Link to={`/edit/${product._id}`} className="btn btn-active btn-accent">Edit</Link>
-                    <button className="btn btn-active btn-secondary" onClick={() => deleteProduct(product._id)}>Delete</button>
-                </div>
+                {user && user.roles.includes("ROLE_ADMIN") && (
+                    <div className="card-actions justify-end">
+                        <Link to={`/edit/${product._id}`} className="btn btn-active btn-accent">Edit</Link>
+                        <button className="btn btn-active btn-secondary" onClick={() => deleteProduct(product._id)}>Delete</button>
+                    </div>
+                )}
             </div>
         </div>
 

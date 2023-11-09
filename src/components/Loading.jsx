@@ -1,20 +1,20 @@
 import { useLottie } from "lottie-react";
 
 const style = {
-    height: 300,
+  height: 300,
+};
+
+
+function Loading({ animation }) {
+  const options = {
+    animationData: animation.default,
+    loop: true,
+    autoplay: true,
   };
 
+  const { View } = useLottie(options, style);
 
-function Loading({animation}) {
-    const options = {
-        animationData: animation.default,
-        loop: true,
-        autoplay: true,
-      };
-    
-      const { View } = useLottie(options, style);
-    
-      return View;
-    };
+  return View;
+};
 
 export default Loading;

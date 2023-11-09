@@ -33,10 +33,7 @@ const CreatePage = () => {
                 'Good job!',
                 'Create a successful product!',
                 'success'
-              )
-            toast.success(`Save ${res.data.name} sucessfuly` , {
-                theme: "colored"
-              })
+            )
             setIsLoading(false)
             navigate("/")
         } catch (error) {
