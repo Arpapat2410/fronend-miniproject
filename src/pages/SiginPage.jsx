@@ -30,7 +30,9 @@ const SignupPage = () => {
   const handleClick = async (e) => {
     e.preventDefault();
     try {
+      // เรียกใช้งานฟังก์ชัน login จาก authService
       const currentUser = await authService.login(user.username, user.password);
+      // เรียกใช้งานฟังก์ชัน login ใน context
       login(currentUser)
       Swal.fire({
         title: "Login successful!",

@@ -6,9 +6,12 @@ import { VITE_BACKEND_URL } from "../App"
 import { useAuthContext } from '../context/AuthContext.jsx';
 
 const Product = ({ product, getProducts }) => {
+    // ใช้ hook useAuthContext เพื่อดึงข้อมูลผู้ใช้จาก context
     const { user } = useAuthContext()
 
+    // ฟังก์ชัน deleteProduct ที่ใช้ในการลบผลิตภัณฑ์
     const deleteProduct = async (id) => {
+        // ใช้ SweetAlert2 ในการยืนยันการลบ
         const result = await Swal.fire({
             title: 'Are you sure ?',
             text: "Do you really want to delete the product ?",
@@ -18,7 +21,9 @@ const Product = ({ product, getProducts }) => {
             cancelButtonColor: '#d33',
             confirmButtonText: 'Yes, delete it!'
         })
+        // ถ้าผู้ใช้กด "Yes"
         if (result.isConfirmed) {
+            // ส่งคำขอ DELETE ไปยัง API เพื่อลบผลิตภัณฑ์
             try {
                 await axios.delete(`${VITE_BACKEND_URL}/api/products/${id}`)
                 Swal.fire(
@@ -26,8 +31,10 @@ const Product = ({ product, getProducts }) => {
                     'Your file has been deleted.',
                     'success'
                 )
+                // เรียกฟังก์ชัน getProducts เพื่อโหลดข้อมูลผลิตภัณฑ์ใหม่
                 getProducts()
             } catch (error) {
+                // แสดงข้อผิดพลาดในกรณีที่ไม่สามารถลบได้
                 toast.error(error.message, {
                     theme: "colored"
                 })

@@ -7,9 +7,13 @@ import { Link } from "react-router-dom";
 import Swal from 'sweetalert2'
 
 const EditPage = () => {
+    // ใช้ hook useParams เพื่อดึงค่า id จาก URL
     let { id } = useParams();
+    // ใช้ hook useNavigate เพื่อนำทางไปยังหน้าที่ต้องการ
     const navigate = useNavigate();
     const [isLoading, setIsLoading] = useState(false);
+
+    // สถานะ product เพื่อเก็บข้อมูลผลิตภัณฑ์
     const [product, setProduct] = useState({
         name: "",
         league: "",
@@ -18,6 +22,7 @@ const EditPage = () => {
         image: "",
     });
 
+    // ฟังก์ชันที่ใช้ในการดึงข้อมูลผลิตภัณฑ์จาก API โดยใช้ id
     const getProduct = async () => {
         setIsLoading(true);
         try {
@@ -29,13 +34,12 @@ const EditPage = () => {
                 price: response.data.price,
                 image: response.data.image,
             })
-
-
         } catch (error) {
             toast.error(error.message);
         }
     }
 
+    // ฟังก์ชันที่ใช้ในการส่งคำขอ PUT เพื่ออัปเดตข้อมูลผลิตภัณฑ์
     const updateProduct = async (e) => {
         e.preventDefault();
         setIsLoading(true);

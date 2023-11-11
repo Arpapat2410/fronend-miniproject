@@ -4,7 +4,6 @@ const style = {
   height: 300,
 };
 
-
 function Loading({ animation }) {
   const options = {
     animationData: animation.default,

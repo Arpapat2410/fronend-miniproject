@@ -9,11 +9,10 @@ import Categories from "../components/Categories";
 
 const HomePage = () => {
 
+  // ใช้ state เพื่อเก็บข้อมูลผลิตภัณฑ์ที่ดึงมาจาก backend
   const [products, setProducts] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [allCategories, setAllCategories] = useState([''])
-
-
 
   const getProducts = async () => {
     try {
@@ -62,7 +61,6 @@ const HomePage = () => {
             </div>
 
             <div className="container mx-auto grid grid-cols-2 lg:grid-cols-4 gap-4 mt-5 w-[80%]">
-
               {products.map((product, index) => (
                 <Product key={index} product={product} getProducts={getProducts} />
               ))}

@@ -4,7 +4,7 @@ import TokenService from "./token.service";
 //config
 const BASE_URL = import.meta.env.VITE_BACKEND_URL;
 
-
+// สร้าง Axios instance ด้วยค่า baseURL และ headers ที่กำหนด
 const instance = axios.create({
     baseURL: BASE_URL,
     headers: {

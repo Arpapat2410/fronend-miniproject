@@ -19,16 +19,19 @@ const CreatePage = () => {
     const [isLoading, setIsLoading] = useState('')
     const navigate = useNavigate()
     
-
+    // ฟังก์ชันสำหรับบันทึกผลิตภัณฑ์
     const saveProduct = async(e) => {
         e.preventDefault();
+        // ตรวจสอบว่าข้อมูลถูกกรอกครบหรือไม่
         if ( name === "" || league==="" || type ==="" || price ==="" || image ===""){
             alert('Please fill out all input completely');
             return;
         } 
         try {
             setIsLoading(true)
-            const res =  await axios.post(`${VITE_BACKEND_URL}/api/products`, {name:name , league:league , type:type ,price:price , image:image })
+            // ส่งคำขอ POST ไปยัง API เพื่อสร้างผลิตภัณฑ์
+            const res =  await axios.post(`${VITE_BACKEND_URL}/api/products`, 
+            {name:name , league:league , type:type ,price:price , image:image })
             Swal.fire(
                 'Good job!',
                 'Create a successful product!',
@@ -44,6 +47,7 @@ const CreatePage = () => {
         }
     }
 
+    // เรียกใช้ฟังก์ชัน saveProduct และส่งอ็อบเจกต์ที่มีข้อมูลเป็นค่าว่างเพื่อล้างข้อมูลในฟอร์ม
     const handleClear = (e) => {
         saveProduct({
           name: "",

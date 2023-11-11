@@ -16,14 +16,17 @@ const SignupPage = () => {
   const navigate = useNavigate();
   const [_error, setError] = useState(false);
   const [errorMessage, setErrorMessage] = useState({ message: "" })
+  // ฟังก์ชันที่ใช้ในการอัพเดทข้อมูลผู้ใช้เมื่อมีการเปลี่ยนแปลงใน input
   const handleChange = (e) => {
     setUser((prev) => ({ ...prev, [e.target.name]: e.target.value }))
   }
 
+  // ฟังก์ชันที่ใช้ในการดำเนินการเมื่อผู้ใช้กดปุ่มลงทะเบียน
   const handleClick = async (e) => {
     e.preventDefault();
     try {
       if (user.confirmPassword == user.password) {
+        // เรียกใช้งานฟังก์ชัน register จาก authService
         const register = await authService.register(
           user.username,
           user.email,

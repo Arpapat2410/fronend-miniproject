@@ -22,6 +22,7 @@ export const VITE_BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
 const App = () => {
 
   return (
+    //การใช้ Context API โดย AuthProvider เพื่อรวม state และ function ที่เกี่ยวข้องกับการตรวจสอบตัวตน
     <AuthProvider>
       <div>
         <NavBar />
@@ -38,7 +39,6 @@ const App = () => {
         <ToastContainer />
       </div>
     </AuthProvider>
-
   )
 }
 
