@@ -12,7 +12,7 @@ function ProfilePage() {
         <img width={140} src="../../football-players.png" alt="Profile" className="rounded-xl" />
       </figure>
       <div className="card-body items-center text-center">
-        <h2 className="card-title text-2xl text-accent-focus">Profile</h2>
+        <h2 className="card-title text-2xl text-accent-focus mb-2">{user.username}</h2>
         <p className='text-secondary'>ID : {user.id}</p>
         <p className='text-secondary'>Email : {user.email}</p>
         <p className='text-secondary'>ROLES :  {user.roles.length}</p>
