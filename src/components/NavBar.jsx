@@ -15,6 +15,7 @@ function NavBar() {
             title: "Successfully logged out!",
             icon: "success"
         });
+        //ใช้ในการเปลี่ยนเส้นทาง (navigate) ของ React Router.
         navigate("/");
     };
 

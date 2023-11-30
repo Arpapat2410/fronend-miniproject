@@ -12,15 +12,16 @@ const HomePage = () => {
   // ใช้ state เพื่อเก็บข้อมูลผลิตภัณฑ์ที่ดึงมาจาก backend
   const [products, setProducts] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
-  const [allCategories, setAllCategories] = useState([''])
+  const [allCategories, setAllCategories] = useState(['']) //สร้าง state allCategories ที่ใช้เก็บข้อมูลทุกหมวดหมู่ของผลิตภัณฑ์
 
   const getProducts = async () => {
-    try {
+    try { //ส่งคำขอ GET ไปยัง API ของ backend เพื่อดึงข้อมูลผลิตภัณฑ์.
       const response = await axios.get(`${VITE_BACKEND_URL}/api/products`);
       console.log(response.data);
-      setProducts(response.data);
+      setProducts(response.data); // อัปเดต state products ด้วยข้อมูลผลิตภัณฑ์ที่ได้รับ.
+      //อัปเดต state allCategories โดยนำข้อมูลหมวดหมู่มาจากข้อมูลผลิตภัณฑ์ที่ได้รับ และใช้ Set เพื่อลบค่าที่ซ้ำกัน และเพิ่มค่า 'All' เข้าไป.
       setAllCategories(['All', ...new Set(response.data.map(item => item.league))]); // ตั้งค่า allCategories ด้วยข้อมูลหมวดหมู่
-      setIsLoading(false);
+      setIsLoading(false); 
     } catch (error) {
       console.log(error);
     }
@@ -28,14 +29,14 @@ const HomePage = () => {
 
   useEffect(() => {
     setIsLoading(true);
-    getProducts()
-  }, [])
+    getProducts() //เรียกใช้ฟังก์ชัน getProducts เพื่อดึงข้อมูลผลิตภัณฑ์.
+  }, []) //[]: นำมาใช้เพื่อบอกว่า useEffect นี้ต้องทำงานเพียงครั้งเดียวเมื่อ component ถูก render ครั้งแรก.
 
   const filterItem = async (league) => {
     try {
       if (league === 'All') {
         getProducts();
-      } else {
+      } else { //filter เพื่อเลือกเฉพาะผลิตภัณฑ์ที่มีหมวดหมู่ตรงกับที่เลือก และจากนั้นจะอัปเดต state products ด้วยผลลัพธ์ที่ได้
         const newItems = products.filter(item => item.league === league);
         setProducts(newItems);
       }

@@ -1,7 +1,7 @@
 import { useLottie } from "lottie-react";
 
 const style = {
-  height: 300,
+  height: 400,
 };
 
 function Loading({ animation }) {

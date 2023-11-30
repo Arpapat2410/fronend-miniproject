@@ -13,7 +13,6 @@ import ProfilePage from "./pages/ProfilePage"
 import Logout from "./pages/Logout"
 import AdminRoute from './pages/AdminRoute'
 import { AuthProvider } from './context/AuthContext'
-
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -26,7 +25,7 @@ const App = () => {
     <AuthProvider>
       <div>
         <NavBar />
-        <Routes>
+        <Routes> //เส้นทางที่ใช้ในการกำหนดเส้นทางของแอปพลิเคชัน, ซึ่งในแต่ละเส้นทางจะถูกกำหนด element ที่จะแสดงข้อมูลของหน้านั้น ๆ
           <Route index element={<HomePage />} />
           <Route path="/create" element={<CreatePage />} />
           <Route path="/edit/:id" element={<EditPage />} />

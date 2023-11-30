@@ -25,9 +25,9 @@ const EditPage = () => {
     // ฟังก์ชันที่ใช้ในการดึงข้อมูลผลิตภัณฑ์จาก API โดยใช้ id
     const getProduct = async () => {
         setIsLoading(true);
-        try {
+        try { // ส่งคำขอ GET ไปยัง API เพื่อดึงข้อมูลของผลิตภัณฑ์ที่มี id ตามที่ระบุ.
             const response = await axios.get(`${VITE_BACKEND_URL}/api/products/${id}`);
-            setProduct({
+            setProduct({ // หลังจากที่ได้รับข้อมูลจาก API สำเร็จ, ข้อมูลจะถูกนำมาอัปเดตในสถานะ product โดยใช้ setProduct เพื่อแสดงข้อมูลใน UI
                 name: response.data.name,
                 league: response.data.league,
                 type: response.data.type,
@@ -41,22 +41,21 @@ const EditPage = () => {
 
     // ฟังก์ชันที่ใช้ในการส่งคำขอ PUT เพื่ออัปเดตข้อมูลผลิตภัณฑ์
     const updateProduct = async (e) => {
-        e.preventDefault();
+        e.preventDefault(); //ป้องกันการโหลดหน้าใหม่หลังจากกดปุ่มอัปเดต.
         setIsLoading(true);
-        try {
+        try { // ส่งคำขอ PUT ไปยัง API เพื่ออัปเดตข้อมูลผลิตภัณฑ์ที่มี id ตามที่ระบุ โดยใช้ข้อมูลจาก product.
             await axios.put(`${VITE_BACKEND_URL}/api/products/${id}`, product);
             toast.success("Update a product successfully", {
                 theme: "colored"
             })
             navigate('/');
         } catch (error) {
-
             toast.error(error.message, {
                 theme: "colored"
             })
         }
     }
-
+    //พื่อดึงข้อมูลของผลิตภัณฑ์เมื่อคอมโพเนนต์ถูกโหลดครั้งแรก นี่จะทำให้ข้อมูลผลิตภัณฑ์ถูกดึงมาแสดงในฟอร์มเมื่อหน้าแก้ไขถูกโหลด
     useEffect(() => {
         getProduct();
     }, [])

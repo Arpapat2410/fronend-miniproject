@@ -15,7 +15,7 @@ const SignupPage = () => {
   const { login } = useAuthContext();
   const [error, setError] = useState();
 
-  const handleChange = (e) => {
+  const handleChange = (e) => { //จะรับอ็อบเจกต์เหตุการณ์ (event) เป็นพารามิเตอร์ (e).
     setUser((prev) => ({ ...prev, [e.target.name]: e.target.value }))
   }
 
